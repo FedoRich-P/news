@@ -12,7 +12,7 @@ export const Main = () => {
     const [news, setNews] = useState<ArticleFromServer[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [currentPage, setCurrentPage] = useState(1)
-    const [categories, setCategories] = useState([])
+    const [categories, setCategories] = useState<Array<string>>([])
     const [selectedCategory, setSelectedCategory] = useState<string | null>('All')
 //constants
     const totalPage = 10

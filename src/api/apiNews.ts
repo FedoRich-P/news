@@ -3,7 +3,7 @@ import axios from "axios";
 export const BASE_URL = import.meta.env.VITE_NEWS_BASE_URL;
 export const API_KEY = import.meta.env.VITE_NEWS_API_KEY;
 
-export const getNews = async ({currentPage = 1, pageSize = 10, category}: GetNewsProps) => {
+export const getNews = async ({currentPage = 1, pageSize = 10, category, keywords}: GetNewsProps) => {
     try {
         const response = await axios.get(`${BASE_URL}/search`, {
                 params: {
@@ -11,6 +11,7 @@ export const getNews = async ({currentPage = 1, pageSize = 10, category}: GetNew
                     currentPage,
                     pageSize,
                     category,
+                    keywords
                 },
             },
         );
@@ -37,4 +38,5 @@ type GetNewsProps = {
     currentPage: number;
     pageSize: number;
     category: string | null;
+    keywords: string
 }

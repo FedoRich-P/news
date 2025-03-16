@@ -6,6 +6,8 @@ import {Skeleton} from "../../components/Skeleton/Skeleton.tsx";
 import {NewsBanner} from "../../components/NewsBanner/NewsBanner.tsx";
 import {Pagination} from "../../components/Pagination/Pagination.tsx";
 import {Categories} from "../../components/Categories/Categories.tsx";
+import {Search} from "../../components/Search/Search.tsx";
+import {useDebounce} from "../../helpers/hooks/useDebounce.ts";
 
 export const Main = () => {
 //state
@@ -14,21 +16,23 @@ export const Main = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [categories, setCategories] = useState<Array<string>>([])
     const [selectedCategory, setSelectedCategory] = useState<string | null>('All')
+    const [keywords, setKeywords] = useState('')
 //constants
     const totalPage = 10
     const pageSize = 10
+//hooks
+    const debouncedKeyWords = useDebounce({value: keywords, delay: 1500})
 
     const fetchNews = async (currentPage: number) => {
         try {
             setIsLoading(true)
-            const response = await getNews({currentPage, pageSize, category: selectedCategory === 'All' ? null : selectedCategory })
+            const response = await getNews({currentPage, pageSize, keywords: debouncedKeyWords, category: selectedCategory === 'All' ? null : selectedCategory })
             setNews(response?.news)
             setIsLoading(false)
         } catch (error) {
             console.error(error);
         }
     }
-
     const fetchCategories = async () => {
         try{
             const response = await getCategories()
@@ -37,23 +41,18 @@ export const Main = () => {
             console.error(error);
         }
     }
-
     useEffect(() => {
         fetchCategories()
     }, [])
-
     useEffect(() => {
         fetchNews(currentPage)
-    }, [currentPage, selectedCategory])
-
+    }, [currentPage, selectedCategory, debouncedKeyWords])
     const handleNextPage = () => {
         if (currentPage < totalPage) setCurrentPage(currentPage + 1);
     };
-
     const handlePrevPage = () => {
         if (currentPage > totalPage) setCurrentPage(currentPage - 1);
     };
-
     const handlePageNumber = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
@@ -61,6 +60,7 @@ export const Main = () => {
     return (
         <main className={s.main}>
             <Categories categories={categories} setSelectedCategory={setSelectedCategory} selectedCategory={selectedCategory} />
+            <Search keywords={keywords} setKeywords={setKeywords} />
             {news?.length > 0 && isLoading ? <NewsBanner banner={news[0]}/> : <Skeleton type={'banner'} count={1}/>}
             <Pagination totalPages={totalPage}
                         currentPage={currentPage}

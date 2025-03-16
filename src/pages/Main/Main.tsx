@@ -1,23 +1,27 @@
 import s from './Main.module.scss'
 import {useEffect, useState} from "react";
-import {getNews} from "../../api/apiNews.ts";
+import {getCategories, getNews} from "../../api/apiNews.ts";
 import {NewsList} from "../../components/NewsList/NewsList.tsx";
 import {Skeleton} from "../../components/Skeleton/Skeleton.tsx";
 import {NewsBanner} from "../../components/NewsBanner/NewsBanner.tsx";
 import {Pagination} from "../../components/Pagination/Pagination.tsx";
+import {Categories} from "../../components/Categories/Categories.tsx";
 
 export const Main = () => {
+//state
     const [news, setNews] = useState<ArticleFromServer[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [currentPage, setCurrentPage] = useState(1)
-
+    const [categories, setCategories] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState<string | null>('All')
+//constants
     const totalPage = 10
     const pageSize = 10
 
     const fetchNews = async (currentPage: number) => {
         try {
             setIsLoading(true)
-            const response = await getNews({currentPage, pageSize })
+            const response = await getNews({currentPage, pageSize, category: selectedCategory === 'All' ? null : selectedCategory })
             setNews(response?.news)
             setIsLoading(false)
         } catch (error) {
@@ -25,9 +29,22 @@ export const Main = () => {
         }
     }
 
+    const fetchCategories = async () => {
+        try{
+            const response = await getCategories()
+            setCategories([...response.categories])
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        fetchCategories()
+    }, [])
+
     useEffect(() => {
         fetchNews(currentPage)
-    }, [currentPage])
+    }, [currentPage, selectedCategory])
 
     const handleNextPage = () => {
         if (currentPage < totalPage) setCurrentPage(currentPage + 1);
@@ -43,6 +60,7 @@ export const Main = () => {
 
     return (
         <main className={s.main}>
+            <Categories categories={categories} setSelectedCategory={setSelectedCategory} selectedCategory={selectedCategory} />
             {news?.length > 0 && isLoading ? <NewsBanner banner={news[0]}/> : <Skeleton type={'banner'} count={1}/>}
             <Pagination totalPages={totalPage}
                         currentPage={currentPage}

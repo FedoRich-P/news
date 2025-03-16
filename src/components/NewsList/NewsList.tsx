@@ -1,8 +1,9 @@
 import s from './NewsList.module.scss';
 import {NewsItem} from "../NewsItem/NewsItem.tsx";
 import {ArticleFromServer} from "../../pages/Main/Main.tsx";
+import {withSkeleton} from "../../helpers/hocs/withSkeleton.tsx";
 
-export const NewsList = ({ news }: NewsListProps) => {
+const NewsList = ({ news }: NewsListProps) => {
   return (
     <ul className={s.list}>
       {news && news.map((item) => (
@@ -11,6 +12,8 @@ export const NewsList = ({ news }: NewsListProps) => {
     </ul>
   );
 }
+
+export const NewsListWithSkeleton = withSkeleton<NewsListProps>({ Component: NewsList, type: 'item',count: 10})
 
 type NewsListProps = {
   news : ArticleFromServer[]

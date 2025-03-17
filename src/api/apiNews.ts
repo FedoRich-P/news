@@ -4,7 +4,6 @@ import {ArticleFromServer} from "../pages/Main/Main.tsx";
 export const BASE_URL = import.meta.env.VITE_NEWS_BASE_URL;
 export const API_KEY = import.meta.env.VITE_NEWS_API_KEY;
 
-// export const getNews = async ({currentPage = 1, pageSize = 10, category, keywords}: GetNewsProps) => {
 export const getNews = async (params?: GetNewsProps): Promise<{ news: ArticleFromServer[] }> => {
     const defaultParams: GetNewsProps = {
         currentPage: 1,
@@ -43,7 +42,7 @@ export const getCategories = async (): Promise<{ categories: string[] }> => {
 
 export type GetNewsProps = {
     currentPage: number;
-    pageSize: number;
+    pageSize?: number;
     category: string | null;
     keywords: string
 }

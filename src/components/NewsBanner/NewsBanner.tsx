@@ -2,9 +2,8 @@ import s from './NewsBanner.module.scss'
 import {formatTimeAgo} from "../../helpers/formatTimeAgo.ts";
 import {Image} from "../Image/Image.tsx";
 import {ArticleFromServer} from "../../pages/Main/Main.tsx";
-import {withSkeleton} from "../../helpers/hocs/withSkeleton.tsx";
 
-const NewsBanner = ({banner}: NewsBannerProps) => {
+export const NewsBanner = ({banner}: NewsBannerProps) => {
     return (
         <article className={s.banner}>
             <Image image={banner?.image} alt={banner?.title}/>
@@ -14,8 +13,6 @@ const NewsBanner = ({banner}: NewsBannerProps) => {
     );
 };
 
-export const NewsBannerWithSkeleton = withSkeleton<NewsBannerProps>({ Component: NewsBanner, type: 'banner',count: 1})
-
-type NewsBannerProps = {
-    banner: Pick<ArticleFromServer, 'title' | 'author' | 'published' | 'image'>;
+export type NewsBannerProps = {
+    banner: Pick<ArticleFromServer, 'title' | 'author' | 'published' | 'image' | 'id'>;
 };

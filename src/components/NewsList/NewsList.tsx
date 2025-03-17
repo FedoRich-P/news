@@ -16,5 +16,5 @@ const NewsList = ({ news }: NewsListProps) => {
 export const NewsListWithSkeleton = withSkeleton<NewsListProps>({ Component: NewsList, type: 'item',count: 10})
 
 type NewsListProps = {
-  news : ArticleFromServer[]
+  news : ArticleFromServer[] | null
 }

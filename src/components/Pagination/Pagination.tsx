@@ -31,7 +31,7 @@ export const Pagination = ({totalPages, handleNextPage, handlePrevPage, handlePa
     }
 ;
 
-type Pagination = {
+export type Pagination = {
     currentPage: number;
     totalPages: number;
     handleNextPage: () => void;

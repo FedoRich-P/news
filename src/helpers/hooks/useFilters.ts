@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {GetNewsProps} from "../../api/apiNews.ts";
+import { GetNewsProps } from '../../api/apiNews.ts';
 
 export const useFilters = (initialFilters: GetNewsProps) => {
   const [filters, setFilters] = useState(initialFilters);

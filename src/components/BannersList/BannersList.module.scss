@@ -1,8 +1,13 @@
 .banners {
   width: 100%;
-  max-height: 1200px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
-  overflow-y: auto;
+}
+
+@media  (max-width: 800px) {
+  .banners {
+    max-height: 1200px;
+    overflow-y: auto;
+  }
 }

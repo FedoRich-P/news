@@ -1,34 +1,12 @@
 import s from './Main.module.scss';
-import { getNews } from '../../api/apiNews.ts';
-import { useDebounce } from '../../helpers/hooks/useDebounce.ts';
-import { PAGE_SIZE } from '../../constants/constants.ts';
-import { useFetch } from '../../helpers/hooks/useFetch.ts';
-import { useFilters } from '../../helpers/hooks/useFilters.ts';
 import { LatestNews } from '../../components/LatestNews/LatestNews.tsx';
 import { NewsByFilters } from '../../components/NewsByFilters/NewsByFilters.tsx';
 
 export const Main = () => {
-  const { filters, changeFilter } = useFilters({
-    currentPage: 1,
-    pageSize: PAGE_SIZE,
-    category: null,
-    keywords: '',
-  });
-
-  const debouncedKeyWords = useDebounce({ value: filters.keywords, delay: 1500 });
-
-  const { data, isLoading } = useFetch({
-    fetch: getNews,
-    params: {
-      ...filters,
-      keywords: debouncedKeyWords,
-    },
-  });
-
   return (
     <main className={s.main}>
-      <LatestNews isLoading={isLoading} banners={data && data.news} />
-      <NewsByFilters isLoading={isLoading} news={data && data.news} changeFilter={changeFilter} filters={filters} />
+      <LatestNews />
+      <NewsByFilters/>
     </main>
   );
 };

@@ -4,6 +4,7 @@ import { useFetch } from '../../helpers/hooks/useFetch.ts';
 import { getCategories } from '../../api/apiNews.ts';
 import s from './NewsFilters.module.scss'
 import { CategoriesApiResponse, IFilters } from '../../interfaces/interfaces.ts';
+import { Slider } from '../Slider/Slider.tsx';
 
 
 export const NewsFilters = ({ filters, changeFilter }: NewsFiltersProps) => {

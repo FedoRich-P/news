@@ -1,7 +1,7 @@
 import s from './BannersList.module.scss';
 import { withSkeleton } from '../../helpers/hocs/withSkeleton.jsx';
 import { NewsBanner } from '../NewsBanner/NewsBanner.tsx';
-import { ArticleFromServer } from '../../pages/Main/Main.tsx';
+import { INews } from '../../interfaces/interfaces.ts';
 
 export const BannersList = ({ banners }: BannersListProps) => {
   return (
@@ -13,8 +13,8 @@ export const BannersList = ({ banners }: BannersListProps) => {
   );
 };
 
-export const BannersListWithSkeleton = withSkeleton({Component: BannersList, type: 'banner', count: 6, direction: 'row'})
+export const BannersListWithSkeleton = withSkeleton<BannersListProps>({Component: BannersList, type: 'banner', count: 6, direction: 'row'})
 
 type BannersListProps = {
-  banners: Pick<ArticleFromServer, 'title' | 'author' | 'published' | 'image' | 'id'>[] | null;
+  banners?: INews[] | null;
 }

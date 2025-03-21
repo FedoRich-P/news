@@ -1,7 +1,7 @@
 import s from './NewsList.module.scss';
-import {NewsItem} from "../NewsItem/NewsItem.tsx";
-import {ArticleFromServer} from "../../pages/Main/Main.tsx";
-import {withSkeleton} from "../../helpers/hocs/withSkeleton.tsx";
+import { NewsItem } from '../NewsItem/NewsItem.tsx';
+import { withSkeleton } from '../../helpers/hocs/withSkeleton.tsx';
+import { INews } from '../../interfaces/interfaces.ts';
 
 const NewsList = ({ news }: NewsListProps) => {
   return (
@@ -16,5 +16,5 @@ const NewsList = ({ news }: NewsListProps) => {
 export const NewsListWithSkeleton = withSkeleton<NewsListProps>({ Component: NewsList, type: 'item',count: 10})
 
 type NewsListProps = {
-  news : ArticleFromServer[] | null
+  news?: INews[] | null;
 }

@@ -1,6 +1,6 @@
 import s from './NewsItem.module.scss';
-import {formatTimeAgo} from '../../helpers/formatTimeAgo.js';
-import {ArticleFromServer} from "../../pages/Main/Main.tsx";
+import { formatTimeAgo } from '../../helpers/formatTimeAgo.js';
+import { INews } from '../../interfaces/interfaces.ts';
 
 export const NewsItem = ({item}: NewsItemProps) => {
     return (
@@ -28,5 +28,5 @@ export const NewsItem = ({item}: NewsItemProps) => {
 };
 
 export type NewsItemProps = {
-    item: Pick<ArticleFromServer, 'title' | 'author' | 'published' | 'image' | 'url'>;
+    item: INews;
 };

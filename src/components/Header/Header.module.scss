@@ -24,4 +24,15 @@
     font-weight: 500;
     color: gray;
   }
+
+  &.dark {
+    background-color: #23272f;
+    color: white;
+  }
+
+  &.light {
+    background-color: #ccc;
+    color: #23272f;
+  }
 }
+

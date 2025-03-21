@@ -1,9 +1,10 @@
 import s from './Categories.module.scss';
+import { forwardRef } from 'react';
 
-export const Categories = ({categories, setSelectedCategory, selectedCategory}: CategoriesProps) => {
-
+  export const Categories = forwardRef<HTMLUListElement, CategoriesProps>(
+    ({ categories, setSelectedCategory, selectedCategory }, ref) => {
     return (
-        <ul className={s.categories}>
+        <ul ref={ref} className={s.categories}>
             <button className={`${s.item} ${!selectedCategory ? s.active : ''}`}
                     onClick={() => setSelectedCategory(null)}>
                 All
@@ -18,9 +19,11 @@ export const Categories = ({categories, setSelectedCategory, selectedCategory}: 
             ))}
         </ul>
     );
-};
+})
 
-type CategoriesProps = {
+Categories.displayName = 'Categories';
+
+export type CategoriesProps = {
     categories: Array<string>;
     setSelectedCategory: (category: string | null) => void;
     selectedCategory: string | null;

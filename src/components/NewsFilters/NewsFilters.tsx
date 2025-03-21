@@ -5,14 +5,17 @@ import { getCategories } from '../../api/apiNews.ts';
 import s from './NewsFilters.module.scss'
 import { CategoriesApiResponse, IFilters } from '../../interfaces/interfaces.ts';
 
+
 export const NewsFilters = ({ filters, changeFilter }: NewsFiltersProps) => {
   const { data: dataCategories } = useFetch<CategoriesApiResponse,null>( getCategories );
 
   return (
     <div className={s.filters}>
-      {dataCategories && <Categories selectedCategory={filters.category}
-                                     categories={dataCategories.categories}
-                                     setSelectedCategory={(category) => changeFilter('category', category)} />}
+      {dataCategories && <Slider>
+        <Categories selectedCategory={filters.category}
+                    categories={dataCategories.categories}
+                    setSelectedCategory={(category) => changeFilter('category', category)} />
+      </Slider>}
       <Search keywords={filters.keywords}
               setKeywords={(keywords) => changeFilter('keywords', keywords)} />
     </div>);

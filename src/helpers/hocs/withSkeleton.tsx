@@ -1,5 +1,6 @@
 import {Skeleton} from '../../components/Skeleton/Skeleton.tsx';
 import {ComponentType} from "react";
+import { DirectionsType, SkeletonType } from '../../interfaces/interfaces.ts';
 
 export const withSkeleton = <P extends object>({Component, type, count, direction} : WithSkeletonComponentProps<P>) => {
   return function WithSkeleton({isLoading, ...restProps}: WithSkeletonFnProps<P>) {
@@ -11,9 +12,9 @@ export const withSkeleton = <P extends object>({Component, type, count, directio
 };
 
 type WithSkeletonComponentProps<P = object> = {
-  type: string;
+  type: SkeletonType;
   count: number;
-  direction?: string | undefined;
+  direction?: DirectionsType;
   Component: ComponentType<P>
 }
 

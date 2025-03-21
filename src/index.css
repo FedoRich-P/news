@@ -11,9 +11,33 @@
     font-family: "Inter", "sans-serif";
 }
 
-.container {
+.app {
     padding: 24px;
     margin: 0 auto;
     max-width: 1440px;
     min-height: 100vh;
+}
+
+.app.dark main
+/*.app.dark header */
+{
+    background-color: #23272f;
+}
+
+.app.light main
+/*.app.light header*/
+{
+    background-color: white;
+}
+
+.app.dark p,
+.app.dark h3,
+.app.dark * {
+    color: #f6f7f8;
+}
+
+.app.light p,
+.app.light h3,
+.app.light * {
+    color: black;
 }

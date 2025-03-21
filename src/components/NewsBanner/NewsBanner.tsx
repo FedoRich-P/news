@@ -1,7 +1,7 @@
-import s from './NewsBanner.module.scss'
-import {formatTimeAgo} from "../../helpers/formatTimeAgo.ts";
-import {Image} from "../Image/Image.tsx";
-import {ArticleFromServer} from "../../pages/Main/Main.tsx";
+import s from './NewsBanner.module.scss';
+import { formatTimeAgo } from '../../helpers/formatTimeAgo.ts';
+import { Image } from '../Image/Image.tsx';
+import { INews } from '../../interfaces/interfaces.ts';
 
 export const NewsBanner = ({banner}: NewsBannerProps) => {
     return (
@@ -14,5 +14,5 @@ export const NewsBanner = ({banner}: NewsBannerProps) => {
 };
 
 export type NewsBannerProps = {
-    banner: Pick<ArticleFromServer, 'title' | 'author' | 'published' | 'image' | 'id'>;
+    banner: INews;
 };

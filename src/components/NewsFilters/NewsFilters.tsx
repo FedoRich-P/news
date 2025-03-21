@@ -1,11 +1,12 @@
 import { Categories } from '../Categories/Categories.tsx';
 import { Search } from '../Search/Search.tsx';
 import { useFetch } from '../../helpers/hooks/useFetch.ts';
-import { getCategories, GetNewsProps } from '../../api/apiNews.ts';
+import { getCategories } from '../../api/apiNews.ts';
 import s from './NewsFilters.module.scss'
+import { CategoriesApiResponse, IFilters } from '../../interfaces/interfaces.ts';
 
 export const NewsFilters = ({ filters, changeFilter }: NewsFiltersProps) => {
-  const { data: dataCategories } = useFetch<{ categories: string[] }>({ fetch: getCategories });
+  const { data: dataCategories } = useFetch<CategoriesApiResponse,null>( getCategories );
 
   return (
     <div className={s.filters}>
@@ -18,6 +19,6 @@ export const NewsFilters = ({ filters, changeFilter }: NewsFiltersProps) => {
 };
 
 type NewsFiltersProps = {
-  filters: GetNewsProps;
+  filters: IFilters;
   changeFilter: (key: string, value: number | string | null) => void;
 };

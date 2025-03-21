@@ -1,25 +1,19 @@
-import {useEffect, useState} from 'react';
-import {GetNewsProps} from "../../api/apiNews.ts";
+import { useEffect, useState } from 'react';
 
-export const useFetch = <T>({fetch, params}: UseFetch<T>) => {
-  const [data, setData] = useState<T | null>(null);
+export const useFetch = <T, P>(fetch: FetchFunction<P, T>, params?: P): UseFetchResult<T> => {
+// export const useFetch = <T>({fetch, params}: UseFetch<T>): UseFetchResult<T> => {
+  const [data, setData] = useState<T | null>([] as T);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const queryString = params
-      ? new URLSearchParams({
-        currentPage: String(params.currentPage),
-        pageSize: String(params.pageSize),
-        category: params.category || '',
-        keywords: params.keywords || '',
-      }).toString()
-      : '';
+  const stringParams = params ? new URLSearchParams(params).toString() : '';
 
   useEffect(() => {
     (async () => {
+      if(!params) return
       try {
         setIsLoading(true);
-        const response: T = params ? await fetch(params) : await fetch();
+        const response =  await fetch(params);
         setData(response);
       } catch (error) {
         setError(error as Error);
@@ -28,18 +22,35 @@ export const useFetch = <T>({fetch, params}: UseFetch<T>) => {
         setIsLoading(false);
       }
     })();
-  }, [fetch, queryString]);
+  }, [fetch, stringParams]);
 
 
   return {data, isLoading, error}
 };
 
-type FetchFunction<T> = (params?: GetNewsProps) => Promise<T>;
+type FetchFunction<P, T> = {
+  (params: P): Promise<T>
+};
 
-type UseFetch<T> = {
-  fetch: FetchFunction<T>;
-  params?: GetNewsProps;
+// type UseFetch<T, P> = {
+//   fetch: FetchFunction<T, P>;
+//   params?: P;
+// }
+
+type UseFetchResult<T> = {
+  data: T | null | undefined;
+  isLoading: boolean;
+  error: Error | null;
 }
+
+// const queryString = params
+//     ? new URLSearchParams({
+//       currentPage: String(params.currentPage),
+//       pageSize: String(params.pageSize),
+//       category: params.category || '',
+//       keywords: params.keywords || '',
+//     }).toString()
+//     : '';
 
 // const stringParams  = {
 //   currentPage: String(params?.currentPage),

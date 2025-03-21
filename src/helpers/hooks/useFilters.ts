@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { GetNewsProps } from '../../api/apiNews.ts';
+import { IFilters } from '../../interfaces/interfaces.ts';
 
-export const useFilters = (initialFilters: GetNewsProps) => {
-  const [filters, setFilters] = useState(initialFilters);
+export const useFilters = (initialFilters: IFilters) => {
+  const [filters, setFilters] = useState<IFilters>(initialFilters);
 
   const changeFilter = (key: string, value: number | string | null) => {
     setFilters((prevState) => ({ ...prevState, [key]: value }));

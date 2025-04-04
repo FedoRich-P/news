@@ -23,13 +23,13 @@ const dispatch = useAppDispatch();
   const handleNextPage = () => {
     if (filters.currentPage < TOTAL_PAGES) {
       dispatch(setFilters({key: 'currentPage', value: filters.currentPage + 1}));
-    };
+    }
   };
 
   const handlePrevPage = () => {
     if (filters.currentPage > 1) {
       dispatch(setFilters({key: 'currentPage', value: filters.currentPage - 1}));
-    };
+    }
   };
 
   const handlePageNumber = (pageNumber: number) => {

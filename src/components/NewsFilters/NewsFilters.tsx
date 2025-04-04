@@ -1,28 +1,42 @@
-import { Categories } from '../Categories/Categories.tsx';
-import { Search } from '../Search/Search.tsx';
-import { useFetch } from '../../helpers/hooks/useFetch.ts';
-import { getCategories } from '../../api/apiNews.ts';
-import s from './NewsFilters.module.scss'
-import { CategoriesApiResponse, IFilters } from '../../interfaces/interfaces.ts';
-import { Slider } from '../Slider/Slider.tsx';
+import { useCallback } from 'react';
+import { Categories } from '../Categories/Categories';
+import { Search } from '../Search/Search';
+import s from './NewsFilters.module.scss';
+import { IFilters } from '../../interfaces/interfaces';
+import { Slider } from '../Slider/Slider';
+import { useGetCategoriesQuery } from '../../app/services/newsApi';
+import { setFilters } from '../../app/features/news/newsSlice';
+import { useAppDispatch } from '../../app/hooks';
 
+export const NewsFilters = ({ filters: { category, keywords } }: NewsFiltersProps) => {
+  const dispatch = useAppDispatch();
+  const { data: dataCategories, error } = useGetCategoriesQuery();
 
-export const NewsFilters = ({ filters, changeFilter }: NewsFiltersProps) => {
-  const { data: dataCategories } = useFetch<CategoriesApiResponse,null>( getCategories );
+  const setSelectedCategoryHandler = useCallback((category: string | null) => {
+    dispatch(setFilters({ key: 'category', value: category }));
+  }, [dispatch]);
+
+  const setKeywordsHandler = useCallback((keywords: string) => {
+    dispatch(setFilters({ key: 'keywords', value: keywords }));
+  }, [dispatch]);
+
+  if (error) return <div className={s.error}>Ошибка загрузки категорий</div>;
 
   return (
     <div className={s.filters}>
-      {dataCategories && <Slider>
-        <Categories selectedCategory={filters.category}
-                    categories={dataCategories.categories}
-                    setSelectedCategory={(category) => changeFilter('category', category)} />
-      </Slider>}
-      <Search keywords={filters.keywords}
-              setKeywords={(keywords) => changeFilter('keywords', keywords)} />
-    </div>);
+      <Slider>
+        <Categories
+          selectedCategory={category}
+          categories={dataCategories?.categories || []}
+          setSelectedCategory={setSelectedCategoryHandler}
+        />
+      </Slider>
+      )
+      <Search keywords={keywords} setKeywords={setKeywordsHandler} />
+    </div>
+  );
 };
 
 type NewsFiltersProps = {
   filters: IFilters;
-  changeFilter: (key: string, value: number | string | null) => void;
 };

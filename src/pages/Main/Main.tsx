@@ -11,14 +11,14 @@ export const Main = () => {
   );
 };
 
-export type ArticleFromServer = {
-  author: string;
-  category: string[];
-  description: string;
-  id: string;
-  image: string | undefined;
-  language: string;
-  published: string;
-  title: string;
-  url: string;
-};
+// export type ArticleFromServer = {
+//   author: string;
+//   category: string[];
+//   description: string;
+//   id: string;
+//   image: string | undefined;
+//   language: string;
+//   published: string;
+//   title: string;
+//   url: string;
+// };

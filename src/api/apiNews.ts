@@ -28,7 +28,6 @@ export const getNews = async (params: ParamsType): Promise<NewsApiResponse> => {
         return {news: [], page: 1, status: Status.Error}
     }
 };
-
 export const getLatestNews = async (): Promise<NewsApiResponse> => {
     try {
         const response = await axios.get<NewsApiResponse>(`${BASE_URL}/latest-news`, {
@@ -54,13 +53,6 @@ export const getCategories = async (): Promise<CategoriesApiResponse> => {
         return {categories: [], description: '', status: Status.Error}
     }
 };
-
-// export type GetNewsProps = {
-//     currentPage: number;
-//     pageSize?: number;
-//     category: string | null;
-//     keywords: string
-// }
 
 export type NewsApiResponse = {
     news: INews[] ;
